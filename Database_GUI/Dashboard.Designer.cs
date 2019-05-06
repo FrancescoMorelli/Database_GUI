@@ -120,6 +120,7 @@
             // 
             // cmBox_Search
             // 
+            this.cmBox_Search.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmBox_Search.FormattingEnabled = true;
             this.cmBox_Search.Location = new System.Drawing.Point(123, 37);
             this.cmBox_Search.Name = "cmBox_Search";

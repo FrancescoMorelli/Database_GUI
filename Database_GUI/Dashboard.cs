@@ -12,7 +12,7 @@ namespace Database_GUI
 {
     public partial class Dashboard : Form
     {
-        public Func<string, List<People>> GetPeopleRecords = Database.GetPeople;
+        public Func<string,string, List<People>> GetPeopleRecords = Database.GetPeople;
         public Func<bool> LoadDb = Database.LoadDatabase;
 
         public Dashboard()
@@ -25,7 +25,7 @@ namespace Database_GUI
         {
             if (txt_Search.Text != "")
             {
-                list_Search.DataSource = GetPeopleRecords(txt_Search.Text);
+                list_Search.DataSource = GetPeopleRecords(txt_Search.Text, cmBox_Search.Text);
 
                 // FullInfo is a manual implemented property in the People class,
                 // that returns FirstName LastName and EmailAddress
@@ -42,12 +42,22 @@ namespace Database_GUI
             {
                 tabControl1.TabPages.Add(tab_Search);
                 tabControl1.TabPages.Remove(tab_Load);
+                PopulateTableRowBox();
             }
         }
 
         public void PopulateTableRowBox()
         {
+            var tableList = Database.GetTablesName().ToList();
 
+            // Loop starts at 2 to get the People column names
+            // such as FirstName, LastName, EmailAddress, PhoneNumber
+            for (var i = 2; i < tableList.Count; i++)
+            {
+                cmBox_Search.Items.Add(tableList[i]);
+            }
+
+            cmBox_Search.Refresh();
         }
     }
 }

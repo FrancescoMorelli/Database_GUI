@@ -26,7 +26,7 @@ namespace Database_GUI
                     DbPath = openFile.FileName;
                     Connection = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DbPath};Integrated Security = True;";
                     MessageBox.Show("Database loaded with success.");
-                    
+
                     return flag = true;
                 }
                 else
@@ -37,15 +37,43 @@ namespace Database_GUI
             }
         }
 
-        public static List<People> GetPeople(string lastName)
+        public static List<People> GetPeople(string searchValue, string columnName)
         {
-            var m = new SampleDBDataContext(Connection);
-            
-            var query = (from p in m.GetTable<People>()
-                         where p.LastName == $"{lastName}"
-                         select p).ToList();
-            
-            return query;
+            var db = new SampleDBDataContext(Connection);
+
+            switch (columnName)
+            {
+                case "LastName":
+                    var lastNameQuery = db.Peoples.Where(x => x.LastName == $"{searchValue}").ToList();
+                    return lastNameQuery;
+
+                case "FirstName":
+                    var firstNameQuery = db.Peoples.Where(x => x.FirstName == $"{searchValue}").ToList();
+                    return firstNameQuery;
+
+                case "PhoneNumber":
+                    var phoneNumberQuery = db.Peoples.Where(x => x.PhoneNumber == $"{searchValue}").ToList();
+                    return phoneNumberQuery;
+
+                default:
+                    return null;
+            }
+
+
+            //var query = (from p in db.GetTable<People>()
+            //             where p.LastName == $"{searchValue}"
+            //             select p).ToList();
+
+        }
+
+        public static IEnumerable<string> GetTablesName()
+        {
+            var db = new SampleDBDataContext(Connection);
+
+            var columnNames = from t in typeof(People).GetProperties()
+                              select t.Name;
+
+            return columnNames;
         }
     }
 }
