@@ -51,6 +51,10 @@ namespace Database_GUI
                     var firstNameQuery = db.Peoples.Where(x => x.FirstName == $"{searchValue}").ToList();
                     return firstNameQuery;
 
+                case "EmailAddress":
+                    var emailAddressQuery = db.Peoples.Where(x => x.EmailAddress == $"{searchValue}").ToList();
+                    return emailAddressQuery;
+
                 case "PhoneNumber":
                     var phoneNumberQuery = db.Peoples.Where(x => x.PhoneNumber == $"{searchValue}").ToList();
                     return phoneNumberQuery;
@@ -58,12 +62,19 @@ namespace Database_GUI
                 default:
                     return null;
             }
+        }
 
+        public static List<People> GetAllRecords()
+        {
+            var db = new SampleDBDataContext(Connection);
+            List<People> allRecordsQuery = new List<People>();
 
-            //var query = (from p in db.GetTable<People>()
-            //             where p.LastName == $"{searchValue}"
-            //             select p).ToList();
+            foreach (var line in db.Peoples)
+            {
+                allRecordsQuery.Add(line);
+            }
 
+            return allRecordsQuery;
         }
 
         public static IEnumerable<string> GetTablesName()

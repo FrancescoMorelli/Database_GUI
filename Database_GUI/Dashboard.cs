@@ -12,7 +12,7 @@ namespace Database_GUI
 {
     public partial class Dashboard : Form
     {
-        public Func<string,string, List<People>> GetPeopleRecords = Database.GetPeople;
+        public Func<string, string, List<People>> GetPeopleRecords = Database.GetPeople;
         public Func<bool> LoadDb = Database.LoadDatabase;
 
         public Dashboard()
@@ -44,6 +44,14 @@ namespace Database_GUI
                 tabControl1.TabPages.Remove(tab_Load);
                 PopulateTableRowBox();
             }
+        }
+
+        private void btn_ListAllRecords_Click(object sender, EventArgs e)
+        {
+            var allPeopleRecords = Database.GetAllRecords();
+            list_Search.DataSource = allPeopleRecords;
+            list_Search.DisplayMember = "FullInfo";
+            list_Search.Refresh();
         }
 
         public void PopulateTableRowBox()

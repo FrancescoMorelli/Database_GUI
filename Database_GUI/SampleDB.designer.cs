@@ -94,7 +94,7 @@ namespace Database_GUI
         {
             get
             {
-                return $"{FirstName} {LastName} ({EmailAddress}) ";
+                return $"Name: {FirstName} {LastName}, Email: ({EmailAddress}), Phone: {PhoneNumber} ";
             }
         }
 
