@@ -77,6 +77,18 @@ namespace Database_GUI
             return allRecordsQuery;
         }
 
+        public static void DeleteRecord(People person)
+        {
+            var db = new SampleDBDataContext(Connection);
+
+            var deleteQuery = from p in db.Peoples
+                              where p.id == person.id
+                              select p;
+
+            db.Peoples.DeleteAllOnSubmit(deleteQuery);
+            db.SubmitChanges();
+        }
+
         public static IEnumerable<string> GetTablesName()
         {
             var db = new SampleDBDataContext(Connection);

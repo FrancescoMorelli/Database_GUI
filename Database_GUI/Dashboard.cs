@@ -67,5 +67,26 @@ namespace Database_GUI
 
             cmBox_Search.Refresh();
         }
+
+        private void list_Search_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu contextMenuListBox = new ContextMenu();
+                contextMenuListBox.MenuItems.Add(new MenuItem("Delete Record"));
+                contextMenuListBox.Show(list_Search, new Point(e.X, e.Y));
+
+                var person = list_Search.SelectedItem as People;
+
+                DialogResult deleteRecord = MessageBox.Show($"Do you want to delete ''{person.FullInfo}'' ?", "Delete record?", MessageBoxButtons.YesNo);
+
+                if(deleteRecord == DialogResult.Yes)
+                {
+                    Database.DeleteRecord(person);
+                }
+                
+            }
+        }
     }
 }
+
